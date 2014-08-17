@@ -33,7 +33,7 @@ class MandrillTransport extends AbstractTransport {
 	 * @throws SocketException if email could not be sent
 	 */
 	public function send(CakeEmail $email) {
-		$headers = $email->getHeaders(array('subject', 'from', 'to', 'replyTo'));
+		$headers = $email->getHeaders(array('subject', 'from', 'to', 'cc', 'replyTo'));
 
 		$message = array(
 			'from_email' => $headers['From'],
@@ -43,6 +43,9 @@ class MandrillTransport extends AbstractTransport {
 			'text' => utf8_encode($email->message('text'))
 		);
 
+		if (!empty($headers['Cc'])) {
+			$message['headers']['Cc'] = $headers['Cc'];
+		}
 		if (!empty($headers['Reply-To'])) {
 			$message['headers']['Reply-To'] = $headers['Reply-To'];
 		}

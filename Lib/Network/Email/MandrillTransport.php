@@ -40,7 +40,8 @@ class MandrillTransport extends AbstractTransport {
 			'to' => array(array('email' => $headers['To'])),
 			'subject' => mb_decode_mimeheader($headers['Subject']),
 			'html' => utf8_encode($email->message('html')),
-			'text' => utf8_encode($email->message('text'))
+			'text' => utf8_encode($email->message('text')),
+			'important' => true
 		);
 
 		if (!empty($headers['Cc'])) {
